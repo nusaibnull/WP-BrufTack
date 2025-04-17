@@ -70,6 +70,7 @@ def main():
     parser.add_argument("--threads", type=int, default=5, help="Number of threads to use")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     parser.add_argument("--save-json", action="store_true", help="Save results to brute_force_report.json")
+    parser.add_argument("--target", type=str, help="Scan a single target site directly")
     args = parser.parse_args()
 
     if len(sys.argv) == 1:
@@ -78,17 +79,23 @@ def main():
 
     print(Fore.MAGENTA + "\n★ WP Brute Force Attack Tool ★\n")
 
-    sites = load_sites()
-    if not sites:
-        print(Fore.RED + "[!] No sites found in sites_list.txt")
-        return
-
     results = []
-    with ThreadPoolExecutor(max_workers=args.threads) as executor:
-        futures = [executor.submit(brute_force_site, site, args.verbose) for site in sites]
-        for future in futures:
-            result = future.result()
-            results.append(result)
+
+    if args.target:
+        site = args.target.strip().rstrip("/")
+        result = brute_force_site(site, args.verbose)
+        results.append(result)
+    else:
+        sites = load_sites()
+        if not sites:
+            print(Fore.RED + "[!] No sites found in sites_list.txt")
+            return
+
+        with ThreadPoolExecutor(max_workers=args.threads) as executor:
+            futures = [executor.submit(brute_force_site, site, args.verbose) for site in sites]
+            for future in futures:
+                result = future.result()
+                results.append(result)
 
     if args.save_json:
         save_report(results)
