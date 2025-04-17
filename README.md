@@ -26,8 +26,8 @@ pip install -r requirements.txt
 ### Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/wp-bruteforce-scanner.git
-cd wp-bruteforce-scanner
+git clone https://github.com/nusaibnull/WP-BrufTack.git
+cd WP-BrufTack
 
 ## Usage
 To run the scanner on all sites listed in the site_list.txt file, use the following command:
