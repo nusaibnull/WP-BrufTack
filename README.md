@@ -44,7 +44,9 @@ python brute_force_all.py
 
 ## Example:
 
-```bash
-python brute_force_all.py --verbose --threads 10 --save-json
+python brute_force_all.py --target https://example.com --verbose --save-json
+
+## (From sites_list.txt )
+python brute_force_all.py --threads 10 --verbose --save-json
 
 ⭐️ Good luck!
